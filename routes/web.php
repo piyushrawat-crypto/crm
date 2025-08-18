@@ -40,6 +40,8 @@ Route::get('login-log', [ManagementController::class, 'loginLog'])->name('login-
 
 Route::get('/customer-list', [customerController::class, 'index'])->name('customer-list');
 Route::get('/customer-data', [CustomerController::class, 'customerData'])->name('customer-data');
+Route::get('/customer-edit/{id}', [CustomerController::class, 'customerEdit'])->name('customer-edit');
+
 
 
 

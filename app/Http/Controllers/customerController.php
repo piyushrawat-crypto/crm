@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request; // 👈 add this
-
+use Yajra\DataTables\Facades\DataTables;
 class CustomerController extends Controller
 {
     public function index()
@@ -16,22 +16,23 @@ class CustomerController extends Controller
     public function customerData(Request $request)
     {
         if ($request->ajax()) {
-            $Customer = Customer::select([
+            $data = Customer::select([
                 'customerID',
                 'name',
                 'email',
                 'mobile',
                 'pancard',
-                'aadhar_no',
-                'isVerified'
-            ])
-                ->get();
-
-            return response()->json([
-                "data" => $Customer
+                'aadharNo',
+                'isVerified',
             ]);
+
+            return DataTables::of($data)->make(true);
         }
 
-        return view('management.management');
+        abort(404);
+    }
+
+    public function customerEdit(){
+        return view('customer.customerEdit');
     }
 }
