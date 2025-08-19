@@ -17,18 +17,17 @@ CRM - Customer List
         <div class="table_section padding_infor_info">
             <div class="table-responsive-sm">
 
-                <form action="#" method="post">
+                <form action="{{route('customer-update')}}" method="POST">
 
-                    <input type="hidden" class="form-control" name="c_id" value="790303">
+                    <input type="hidden" class="form-control" name="c_id" value="{{$customer->customerID}}">
 
                     @csrf
-                    @method('PUT')
                     <div class="row">
 
 
                         <div class="col-md-4">
                             <label for="email">First name</label>
-                            <input type="text" class="form-control" name="name" value="PENUGONDA MOTHI" required="">
+                            <input type="text" class="form-control" name="name" value="{{$customer->name}}" required="">
                         </div>
 
 
@@ -36,22 +35,22 @@ CRM - Customer List
 
                         <div class="col-md-4">
                             <label for="email">Mobile</label>
-                            <input type="number" class="form-control" name="mobile" value="9398425705" required="">
+                            <input type="text" class="form-control" name="mobile" value="{{$customer->mobile}}" required="">
                         </div>
 
 
                         <div class="col-md-4">
                             <label for="email">Email ID</label>
-                            <input type="email" class="form-control" name="email" value="PENUGONDATEJA1@GMAIL.COM" required="">
+                            <input type="email" class="form-control" name="email" value="{{$customer->email}}" required="">
                         </div>
 
 
                         <div class="col-md-4">
                             <label for="email">Gender</label>
                             <select class="form-control" name="gender" required="">
-                                <option value="">Choose Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
+                                <option value="" disabled>Choose Gender</option>
+                                <option value="Male" {{$customer->name ? 'selected':''}}>Male</option>
+                                <option value="Female" {{$customer->name ? 'selected':''}}>Female</option>
                             </select>
                         </div>
 
@@ -59,18 +58,18 @@ CRM - Customer List
 
                         <div class="col-md-4">
                             <label for="email">Date of Birth</label>
-                            <input type="date" class="form-control" name="dob" value="0000-00-00" required="">
+                            <input type="date" class="form-control" name="dob" value="{{$customer->dob}}" required="">
                         </div>
 
                         <div class="col-md-4" style="margin-bottom: 15px;">
                             <label for="email">Pancard</label>
-                            <input type="text" class="form-control" name="pancard" value="">
+                            <input type="text" class="form-control" name="pancard" value="{{$customer->pancard}}">
                         </div>
 
 
                         <div class="col-md-4">
                             <label for="email">Aadhar No.</label>
-                            <input type="text" class="form-control" name="aadharNo" value="">
+                            <input type="text" class="form-control" name="aadharNo" value="{{$customer->aadharNo}}">
                         </div>
 
 

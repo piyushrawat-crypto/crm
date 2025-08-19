@@ -17,12 +17,18 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+
+
+    // ----------------- auth ----------------------------
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+
+// ----------------- management ---------------------------
 Route::get('management', [ManagementController::class, 'index'])->name('management');
 Route::get('/create-profile', [ManagementController::class, 'create'])->name('create-profile');
 
@@ -31,16 +37,22 @@ Route::post('/updateProfile', [ManagementController::class, 'updateManagement'])
 
 Route::get('/management-list', [ManagementController::class, 'managementList'])->name('management-list');
 
-
 // Route::get('management-detail', [ManagementController::class, 'managementDetail'])->name('management-detail');
 Route::get('/management-detail/{id}', [ManagementController::class, 'managementDetail'])->name('management-detail');
 Route::get('ivr-status', [ManagementController::class, 'ivrStatus'])->name('ivr-status');
 Route::get('blacklist-customer', [ManagementController::class, 'blackList'])->name('blacklist-customer');
 Route::get('login-log', [ManagementController::class, 'loginLog'])->name('login-log');
+Route::get('blacklist-data', [ManagementController::class, 'blacklistData'])->name('blacklist-data');
+
+
+
+// ---------------------- customer -----------------------------------
+
 
 Route::get('/customer-list', [customerController::class, 'index'])->name('customer-list');
 Route::get('/customer-data', [CustomerController::class, 'customerData'])->name('customer-data');
 Route::get('/customer-edit/{id}', [CustomerController::class, 'customerEdit'])->name('customer-edit');
+Route::post('/customer-update', [CustomerController::class, 'customerUpdate'])->name('customer-update');
 
 
 
@@ -51,6 +63,9 @@ Route::get('payday-collection-hold', [collectioManagerController::class, 'payDay
 
 
 Route::get('report-list', [reportController::class, 'report'])->name('report-list');
+
+
+// ------------------------ lead --------------------------------------------
 
 Route::get('lead-type', [leadController::class, 'leadType'])->name('lead-type');
 Route::get('lead-view', [leadController::class, 'leadView'])->name('lead-view');

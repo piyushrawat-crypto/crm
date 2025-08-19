@@ -43,6 +43,7 @@ return new class extends Migration
             $table->string('geo_pincode')->nullable();
             $table->string('lat')->nullable();
             $table->string('longi')->nullable();
+            $table->string('created_at')->nullable();
         });
     }
 

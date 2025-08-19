@@ -130,8 +130,6 @@
         font-size: 13px;
         background-color: #f1f5f9 !important;
     }
-
-   
 </style>
 
 <body class="inner_page login">

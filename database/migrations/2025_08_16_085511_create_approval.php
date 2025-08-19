@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('approval', function (Blueprint $table) {
-            $table->approvalID(); // approvalID (auto increment primary key)
-
+            // $table->approvalID(); // approvalID (auto increment primary key)
+$table->id('approvalID');
             $table->unsignedBigInteger('customerID')->nullable();
             $table->unsignedBigInteger('leadID')->nullable();
 

@@ -12,6 +12,7 @@ class Customer extends Model
      * @var string
      */
     protected $table = 'customer'; // Laravel convention is plural (optional fix)
+    protected $primaryKey = 'customerID';
 
     /**
      * The attributes that are mass assignable.

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blacklist;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -117,6 +118,18 @@ class ManagementController extends Controller
     {
         return view('management.blackList');
     }
+
+    public function blacklistData(Request $request)
+    {
+        if ($request->ajax()) {
+            $users = Blacklist::select(['id', 'pan', 'mobile', 'email', 'created_date', 'remark'])
+                ->get();
+            return response()->json([
+                "data" => $users
+            ]);
+        }
+    }
+
 
     public function loginLog()
     {

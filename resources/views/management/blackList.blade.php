@@ -21,25 +21,10 @@ CRM - Black List
                             <th>PAN</th>
                             <th>Email</th>
                             <th>Mobile</th>
-                            <th>Reasons</th>
+                            <th>Reason</th>
                             <th>Date</th>
-                           
                         </tr>
                     </thead>
-                    <tbody>
-                        {{-- Example Row --}}
-                        {{-- You will replace this with @foreach($users as $user) --}}
-                        <tr>
-                            <td>1</td>
-                            <td>GEJPR2242C</td>
-                            <td>NATHANRODRIGUESASHER10@GMAIL.COM</td>
-                            <td>9876543210</td>
-                            <td>Hard Recovery</td>
-                            <td>2025-08-11 12:57:53</td>
-                           
-                        </tr>
-
-                    </tbody>
                 </table>
             </div>
         </div>
@@ -50,6 +35,36 @@ CRM - Black List
 <script>
     $(document).ready(function() {
         $('#managementTable').DataTable({
+            processing: true,
+            serverSide: false,
+
+            ajax: {
+                url: "{{ route('blacklist-data') }}",
+                type: "GET",
+                dataSrc: function(json) {
+                    return json.data;
+                }
+            },
+            columns: [{
+                    data: 'id'
+                },
+                {
+                    data: 'pan'
+                },
+                {
+                    data: 'email'
+                },
+                {
+                    data: 'mobile'
+                },
+                {
+                    data: 'remark'
+                },
+                {
+                    data: 'created_date'
+                }
+            ],
+
             pageLength: 20,
             lengthMenu: [20, 40, 60, 80, 100],
             ordering: true,
