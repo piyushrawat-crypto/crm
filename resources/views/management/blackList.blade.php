@@ -6,10 +6,12 @@ CRM - Black List
 
 <div class="col-md-12">
     <div class="white_shd full margin_bottom_30">
-        <div class="full graph_head">
-            <div class="heading1 margin_0">
-                <h2>Management Profile Details</h2>
-            </div>
+        <div class="card-header bg-gradient text-white d-flex justify-content-between align-items-center"
+            style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+            <h5 class="mb-0 fw-bold">👥 Black List Customer</h5>
+            <a href="{{route('add-blacklist')}}" class="btn btn-light btn-sm rounded-pill shadow-sm">
+                <i class="bi bi-plus-circle"></i> Add User
+            </a>
         </div>
 
         <div class="table_section padding_infor_info">

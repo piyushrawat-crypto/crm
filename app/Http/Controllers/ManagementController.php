@@ -61,40 +61,52 @@ class ManagementController extends Controller
 
     public function updateManagement(Request $request)
     {
+        // Find the user by ID (make sure ID is passed in the form)
+        $user = User::findOrFail($request->id);
+
+        // Validate input
         $request->validate([
             'name'     => 'required|string|max:255',
-            'email'    => 'required|email|unique:users,email',
+            'email'    => 'required|email|unique:users,email,' . $user->id, // ignore current user's email
             'mobile'   => 'required|digits:10',
-            'password' => 'required|min:8',
             'branch'   => 'required|string',
             'role'     => 'required|string',
-            'status'   => 'required|in:Active,Inactive',
-            'access'   => 'nullable|array', // checkboxes array allow
+            'status'   => 'required|in:Active,In Active',
+            'per'      => 'nullable|array', // Match the checkbox name in form
         ]);
 
-        $user = new User();
+        // Update fields
         $user->name     = $request->name;
         $user->email    = $request->email;
         $user->mobile   = $request->mobile;
-        $user->password = Hash::make($request->password);
+        $user->userName = $request->userName ?? $user->userName;
         $user->branch   = $request->branch;
         $user->role     = $request->role;
         $user->status   = $request->status;
-        $user->access   = json_encode($request->access); // ✅ array ko JSON me save karo
 
+        // Update password only if filled
+        if (!empty($request->password)) {
+            $request->validate([
+                'password' => 'min:8',
+            ]);
+            $user->password = Hash::make($request->password);
+        }
+
+        // Update access (permissions)
+        $user->access = json_encode($request->per ?? []);
 
         $user->save();
 
-        return redirect()->route('create-profile')
-            ->with('status', 'User created successfully!');
+        return redirect()->back()->with('status', 'User updated successfully!');
     }
+
+
     public function managementDetail($id)
     {
         $user = User::find($id);
         // dd($user->access);
         return view("management.managementDetail", compact('user'));
     }
-
     public function managementList(Request $request)
     {
         if ($request->ajax()) {
@@ -131,8 +143,36 @@ class ManagementController extends Controller
     }
 
 
+    public function addBlackList()
+    {
+        return view('management.addBlackList');
+    }
+
     public function loginLog()
     {
         return view('management.loginLog');
+    }
+
+    public function createBlackList(Request $request)
+    {
+        // ✅ Validation
+        $request->validate([
+            'pan'    => 'required',
+            'email'  => 'required|',
+            'mobile' => 'required|',
+            'remark' => 'required|string|max:255',
+        ]);
+
+        // ✅ Insert record
+        Blacklist::create([
+            'pan'        => $request->pan,
+            'email'      => $request->email,
+            'mobile'     => $request->mobile,
+            'remark'     => $request->remark,
+            'created_date' => now(),
+        ]);
+
+        // ✅ Redirect with success message
+        return redirect()->back()->with('success', 'Blacklist entry created successfully!');
     }
 }

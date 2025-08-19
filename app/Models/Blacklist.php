@@ -12,16 +12,13 @@ class Blacklist extends Model
     // Define the table name if it’s not the plural of the model
     protected $table = 'blacklistcustomer';
 
-    // Define the primary key if it’s not "id"
-    protected $primaryKey = 'id';
-
     // Allow mass assignment for these fields
     protected $fillable = [
         'pan',
         'email',
         'mobile',
-        'reasons',
-        'date',
+        'remark',
+        'created_date',
     ];
 
     // If you don’t want timestamps (created_at, updated_at)

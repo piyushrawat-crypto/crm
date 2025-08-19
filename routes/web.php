@@ -43,6 +43,9 @@ Route::get('ivr-status', [ManagementController::class, 'ivrStatus'])->name('ivr-
 Route::get('blacklist-customer', [ManagementController::class, 'blackList'])->name('blacklist-customer');
 Route::get('login-log', [ManagementController::class, 'loginLog'])->name('login-log');
 Route::get('blacklist-data', [ManagementController::class, 'blacklistData'])->name('blacklist-data');
+Route::get('add-blacklist', [ManagementController::class, 'addBlackList'])->name('add-blacklist');
+Route::post('/create-blacklist', [ManagementController::class, 'createBlackList'])->name('create-blacklist');
+Route::post('add-blacklist', [ManagementController::class, 'addBlackList'])->name('add-blacklist');
 
 
 
@@ -52,7 +55,6 @@ Route::get('blacklist-data', [ManagementController::class, 'blacklistData'])->na
 Route::get('/customer-list', [customerController::class, 'index'])->name('customer-list');
 Route::get('/customer-data', [CustomerController::class, 'customerData'])->name('customer-data');
 Route::get('/customer-edit/{id}', [CustomerController::class, 'customerEdit'])->name('customer-edit');
-Route::post('/customer-update', [CustomerController::class, 'customerUpdate'])->name('customer-update');
 
 
 
