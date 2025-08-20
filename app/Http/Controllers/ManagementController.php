@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blacklist;
+use App\Models\Ivrstatus;
+use App\Models\Loginlogs;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -174,5 +176,75 @@ class ManagementController extends Controller
 
         // ✅ Redirect with success message
         return redirect()->back()->with('success', 'Blacklist entry created successfully!');
+    }
+
+    public function ivrStatusData(Request $request)
+    {
+        if ($request->ajax()) {
+            $users = Ivrstatus::select([
+                'id',
+                'type',
+                'ivrstageName as ivr_status_name',
+                'ivrurl as url',
+                'status',
+                'credatedDate as created_at',
+
+            ])->get();
+
+            return response()->json([
+                "data" => $users
+            ]);
+        }
+    }
+
+    public function editIvrstatus($id)
+    {
+        $ivr = Ivrstatus::find($id);
+        // dd($user->access);
+        return view("management.editIvrStatus", compact('ivr'));
+    }
+
+    public function updateIvrstatus(Request $request)
+    {
+        // ✅ Validate input
+        $validated = $request->validate([
+            'type'         => 'required|string',
+            'ivrstageName' => 'required|string|max:255',
+            'iconCode'     => 'required|string|max:255',
+            'status'       => 'required|string',
+            'appmsg'       => 'nullable|string',
+        ]);
+
+        if ($request->id) {
+            // ✅ Update existing record
+            $ivr = Ivrstatus::findOrFail($request->id);
+            $ivr->update($validated);
+            $msg = "IVR Status updated successfully!";
+        } else {
+            // ✅ Create new record
+            Ivrstatus::create($validated);
+            $msg = "IVR Status created successfully!";
+        }
+
+        // ✅ Redirect back with success message
+        return redirect()->back()->with('success', $msg);
+    }
+    public function loginlogsData(Request $request)
+    {
+        if ($request->ajax()) {
+            $logs = Loginlogs::select([
+                'id',
+                'name',
+                'ip',
+                'email',
+                'userID',
+                'loginStart',
+                'logoutEnd',
+            ])->get();
+
+            return response()->json([
+                "data" => $logs
+            ]);
+        }
     }
 }

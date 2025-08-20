@@ -39,13 +39,17 @@ Route::get('/management-list', [ManagementController::class, 'managementList'])-
 
 // Route::get('management-detail', [ManagementController::class, 'managementDetail'])->name('management-detail');
 Route::get('/management-detail/{id}', [ManagementController::class, 'managementDetail'])->name('management-detail');
-Route::get('ivr-status', [ManagementController::class, 'ivrStatus'])->name('ivr-status');
+Route::get('/ivr-status', [ManagementController::class, 'ivrStatus'])->name('ivr-status');
+Route::get('/ivrstatus-data', [ManagementController::class, 'ivrStatusData'])->name('ivrstatus-data');
 Route::get('blacklist-customer', [ManagementController::class, 'blackList'])->name('blacklist-customer');
 Route::get('login-log', [ManagementController::class, 'loginLog'])->name('login-log');
 Route::get('blacklist-data', [ManagementController::class, 'blacklistData'])->name('blacklist-data');
 Route::get('add-blacklist', [ManagementController::class, 'addBlackList'])->name('add-blacklist');
 Route::post('/create-blacklist', [ManagementController::class, 'createBlackList'])->name('create-blacklist');
 Route::post('add-blacklist', [ManagementController::class, 'addBlackList'])->name('add-blacklist');
+Route::get('edit-ivrstatus/{id}', [ManagementController::class, 'editIvrstatus'])->name('edit-ivrstatus');
+Route::post('/update-ivrstatus', [ManagementController::class, 'updateIvrstatus'])->name('update-ivrstatus');
+Route::get('/loginslogs-data', [ManagementController::class, 'loginlogsData'])->name('loginslogs-data');
 
 
 
@@ -55,7 +59,7 @@ Route::post('add-blacklist', [ManagementController::class, 'addBlackList'])->nam
 Route::get('/customer-list', [customerController::class, 'index'])->name('customer-list');
 Route::get('/customer-data', [CustomerController::class, 'customerData'])->name('customer-data');
 Route::get('/customer-edit/{id}', [CustomerController::class, 'customerEdit'])->name('customer-edit');
-
+Route::post('/customer-update', [CustomerController::class, 'customerUpdate'])->name('customer-update');
 
 
 

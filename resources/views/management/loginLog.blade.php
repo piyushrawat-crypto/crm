@@ -18,38 +18,56 @@ CRM - Logins Log
                     <thead>
                         <tr>
                             <th>Name</th>
+                            <th>Email</th>
                             <th>IP</th>
+                            <th>User ID</th>
                             <th>Log in</th>
                             <th>Log Out</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {{-- Example Row --}}
-                        {{-- You will replace this with @foreach($users as $user) --}}
-                        <tr>
-                            <td>Bhumi</td>
-                            <td>103.61.252.208</td>
-                            <td>2025-08-12 12:32:14</td>
-                            <td>0000-00-00 00:00:00</td>
-                        </tr>
-
-                    </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
 
+<!-- jQuery + DataTables -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
 <script>
     $(document).ready(function() {
         $('#managementTable').DataTable({
+            processing: true,
+            serverSide: false, // ✅ disable server-side
+            ajax: {
+                url: "{{ route('loginslogs-data') }}",
+                type: "GET",
+                dataSrc: function(json) {
+                    console.log("✅ Server Response:", json);
+                    return json.data;
+                }
+            },
+            columns: [
+                { data: 'name', name: 'name' },
+                { data: 'email', name: 'email' },
+                { data: 'ip', name: 'ip' },
+                { data: 'userID', name: 'userID' },
+                { data: 'loginStart', name: 'loginStart' },
+                { data: 'logoutEnd', name: 'logoutEnd' }
+            ],
             pageLength: 20,
-            lengthMenu: [20, 40, 60, 80, 100],
+            lengthMenu: [[20, 40, 60, 80, 100], [20, 40, 60, 80, 100]],
             ordering: true,
-            searching: true
+            searching: true, // ✅ enable search
+            paging: true,
+            responsive: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "🔍 Search logs..."
+            }
         });
     });
 </script>
-
 @endsection

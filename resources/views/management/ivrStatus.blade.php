@@ -6,10 +6,12 @@ CRM - IVR Status
 
 <div class="col-md-12">
     <div class="white_shd full margin_bottom_30">
-        <div class="full graph_head">
-            <div class="heading1 margin_0">
-                <h2>IVR StatusDetails</h2>
-            </div>
+        <div class="card-header bg-gradient text-white d-flex justify-content-between align-items-center"
+            style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+            <h5 class="mb-0 fw-bold">👥 IVR StatusDetails</h5>
+            <a href="{{route('add-blacklist')}}" class="btn btn-light btn-sm rounded-pill shadow-sm">
+                <i class="bi bi-plus-circle"></i> Add User
+            </a>
         </div>
 
         <div class="table_section padding_infor_info">
@@ -24,24 +26,9 @@ CRM - IVR Status
                             <th>Status</th>
                             <th>Date</th>
                             <th>Action</th>
-                            
                         </tr>
                     </thead>
-                    <tbody>
-                        {{-- Example Row --}}
-                        {{-- You will replace this with @foreach($users as $user) --}}
-                        <tr>
-                            <td>1</td>
-                            <td>John Doe</td>
-                            <td>jdoe</td>
-                            <td>john@example.com</td>
-                            <td>9876543210</td>
-                            <td>Main Branch</td>
-                           
-                            <td><a href="" class="btn btn-sm btn-primary" >Edit</a></td>
-                        </tr>
-                        
-                    </tbody>
+
                 </table>
             </div>
         </div>
@@ -52,10 +39,47 @@ CRM - IVR Status
 <script>
     $(document).ready(function() {
         $('#managementTable').DataTable({
-            pageLength: 20,
-            lengthMenu: [20, 40, 60, 80, 100],
-            ordering: true,
-            searching: true
+            processing: true,
+            serverSide: false,
+            ajax: "{{ route('ivrstatus-data') }}", // Laravel route for data
+            columns: [{
+                    data: 'id',
+                    name: 'id'
+                },
+                {
+                    data: 'type',
+                    name: 'type'
+                },
+                {
+                    data: 'ivr_status_name',
+                    name: 'ivr_status_name'
+                },
+                {
+                    data: 'url',
+                    name: 'url'
+                },
+                {
+                    data: 'status',
+                    name: 'status'
+                },
+                {
+                    data: 'created_at',
+                    name: 'created_at'
+                },
+              
+                {
+                    data: 'id',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false,
+                    render: function(data) {
+                        return `
+                            <a href="/edit-ivrstatus/${data}/" class="btn btn-sm btn-primary">Edit</a>
+                           
+                        `;
+                    }
+                },
+            ]
         });
     });
 </script>
